@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChatController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">websocket-demo</a> &gt; <a href="index.source.html" class="el_package">com.example.websocketdemo.controller</a> &gt; <span class="el_source">ChatController.java</span></div><h1>ChatController.java</h1><pre class="source lang-java linenums">package com.example.websocketdemo.controller;
+
+import com.example.websocketdemo.model.ChatMessage;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.stereotype.Controller;
+
+/**
+ * Created by rajeevkumarsingh on 24/07/17.
+ */
+@Controller
+<span class="fc" id="L14">public class ChatController {</span>
+
+    @MessageMapping(&quot;/chat.sendMessage&quot;)
+    @SendTo(&quot;/topic/public&quot;)
+    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+<span class="nc" id="L19">        return chatMessage;</span>
+    }
+
+    @MessageMapping(&quot;/chat.addUser&quot;)
+    @SendTo(&quot;/topic/public&quot;)
+    public ChatMessage addUser(@Payload ChatMessage chatMessage,
+                               SimpMessageHeaderAccessor headerAccessor) {
+        // Add username in web socket session
+<span class="nc" id="L27">        headerAccessor.getSessionAttributes().put(&quot;username&quot;, chatMessage.getSender());</span>
+<span class="nc" id="L28">        return chatMessage;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
